@@ -1,0 +1,9 @@
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/bin/Debug/MonoGame.Framework.dll.config
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/bin/Debug/MonoBomber.MacOS.exe
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/bin/Debug/MonoBomber.MacOS.pdb
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/bin/Debug/MonoGame.Framework.dll
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/bin/Debug/MonoGame.Framework.xml
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/obj/x86/Debug/MonoBomber.MacOS.csprojResolveAssemblyReference.cache
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/obj/x86/Debug/MonoBomber.MacOS.csproj.CoreCompileInputs.cache
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/obj/x86/Debug/MonoBomber.MacOS.exe
+/Users/charliemihran/GameDev/MonoBomber/MonoBomber/obj/x86/Debug/MonoBomber.MacOS.pdb
