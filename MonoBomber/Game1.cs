@@ -11,7 +11,11 @@ namespace MonoBomber.MacOS
     /// </summary>
     public class Game1 : Game
     {
+        // link to your graphics device (lets you set various settings on how things
+        // should be drawn, etc)
         GraphicsDeviceManager graphics;
+
+        // tool to use when you want to draw sprites to the screen
         SpriteBatch spriteBatch;
 
         public Game1()
