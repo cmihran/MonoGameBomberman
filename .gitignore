@@ -1,2 +1,4 @@
 MonoBomber.userprefs
 /MonoBomber/obj/x86/*
+.DS_Store
+/MonoBomber/bin/Debug/*

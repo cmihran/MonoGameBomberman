@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +18,13 @@ namespace MonoBomber.MacOS
         // tool to use when you want to draw sprites to the screen
         SpriteBatch spriteBatch;
 
+        Player p1;
+
+        public static Texture2D bombTex;
+        public static Texture2D explodeTex;
+
+        readonly int SPEED = 8;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -32,7 +39,7 @@ namespace MonoBomber.MacOS
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            p1 = new Player(Content.Load<Texture2D>("Images/akash"), Vector2.Zero);
 
             base.Initialize();
         }
@@ -46,7 +53,8 @@ namespace MonoBomber.MacOS
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //TODO: use this.Content to load your game content here 
+            bombTex = this.Content.Load<Texture2D>("Images/bomb");
+            explodeTex = this.Content.Load<Texture2D>("Images/explode");
         }
 
         /// <summary>
@@ -61,7 +69,47 @@ namespace MonoBomber.MacOS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            p1.Update();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) 
+            {
+                if (p1.pos.Y > 0) 
+                {
+                    p1.pos.Y -= SPEED;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                if (p1.pos.X > 0)
+                {
+                    p1.pos.X -= SPEED;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                if (p1.pos.Y + p1.texture.Height < graphics.GraphicsDevice.Viewport.Height)
+                {
+                    p1.pos.Y += SPEED;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                if (p1.pos.X + p1.texture.Width < graphics.GraphicsDevice.Viewport.Width)
+                {
+                    p1.pos.X += SPEED;
+                }
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.X))
+            {
+                if (p1.pos.X + p1.texture.Width + bombTex.Width <= graphics.GraphicsDevice.Viewport.Width)
+                {
+                    p1.PlaceBomb(bombTex);
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -74,7 +122,11 @@ namespace MonoBomber.MacOS
         {
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            p1.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
