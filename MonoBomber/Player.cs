@@ -7,7 +7,7 @@ namespace MonoBomber.MacOS
 {
     public class Player : Sprite
     {
-        private static readonly int BOMB_COOLDOWN = 50;
+        private static readonly int BOMB_COOLDOWN = 0;
 
         private int cooldown;
         public List<Bomb> bombs;
@@ -19,8 +19,15 @@ namespace MonoBomber.MacOS
 
         public new void Draw(SpriteBatch batch) {
             base.Draw(batch);
-            foreach(Bomb b in bombs) {
-                b.Draw(batch);
+            //foreach(Bomb b in bombs) {
+            //    b.Draw(batch);
+            //}
+            for (int i = bombs.Count - 1; i >= 0; i--) {
+                if(bombs[i].ShouldReap()) {
+                    bombs.RemoveAt(i); 
+                } else {
+                    bombs[i].Draw(batch);
+                }
             }
         }
 
