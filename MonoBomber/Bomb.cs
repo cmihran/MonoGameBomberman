@@ -6,27 +6,26 @@ namespace MonoBomber.MacOS
 {
     public class Bomb : Sprite
     {
-        int timer;
-        private Boolean reap;
 
+        // time to explode
+        int timer;
+
+        // amount of time bomb lingers after exploding
         private readonly int LINGER_TIME = -25;
 
         public Bomb(Texture2D texture, Vector2 pos) : base(texture, pos) {
             this.timer = 50;
-            this.reap = false;
         }
 
-        public void Update() {
-            if(timer <= LINGER_TIME) {
-                this.reap = true;
-            } else if(timer == 0) {
+        public override void Update() {
+            if(timer == 0) {
                 this.texture = Game1.explodeTex;
             }
             timer--;
         }
 
         public Boolean ShouldReap() {
-            return reap;
+            return timer <= LINGER_TIME;
         }
     }
 }

@@ -4,7 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoBomber.MacOS
 {
-    public class Sprite
+    /// <summary>
+    /// A Sprite is an game object with a texture and a position in 2D.
+    /// It should not be instantiated on its own so it is abstract
+    /// </summary>
+    abstract public class Sprite
     {
         public Texture2D texture;
         public Vector2 pos;
@@ -19,5 +23,7 @@ namespace MonoBomber.MacOS
         {
             batch.Draw(texture, pos, Color.White);
         }
+
+        abstract public void Update();
     }
 }
