@@ -19,7 +19,7 @@ namespace MonoBomber.MacOS
         // list of bombs that belong to this player
         public List<Bomb> bombs;
 
-        public Player(Texture2D texture, Vector2 pos) : base(texture, pos) {
+        public Player(Texture2D texture, Vector2 pos, Color color) : base(texture, pos, color) {
             this.bombs = new List<Bomb>();
             this.bombCooldownLeft = 0;
         }
@@ -59,7 +59,7 @@ namespace MonoBomber.MacOS
         public void PlaceBomb(Texture2D bombTex) {
             if(bombCooldownLeft == 0) {
                 bombCooldownLeft = BOMB_COOLDOWN_TIME;
-                bombs.Add(new Bomb(bombTex, new Vector2(pos.X + texture.Width, pos.Y)));
+                bombs.Add(new Bomb(bombTex, new Vector2(pos.X + texture.Width, pos.Y), color));
             }
         }
 
