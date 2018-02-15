@@ -17,7 +17,7 @@ namespace MonoBomber.MacOS
             this.timer = 50;
         }
 
-        public override void Update() {
+        public void Update() {
             if(timer == 0) {
                 this.texture = MonoBomberGame.explodeTex;
             }

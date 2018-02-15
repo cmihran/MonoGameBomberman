@@ -24,7 +24,6 @@ namespace MonoBomber.MacOS
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
 
-        readonly int SPEED = 8;
 
         public MonoBomberGame()
         {
@@ -40,8 +39,10 @@ namespace MonoBomber.MacOS
         /// </summary>
         protected override void Initialize()
         {
-            p1 = new Player(Content.Load<Texture2D>("Images/akash"), Vector2.Zero, Color.LightBlue);
-            p2 = new Player(Content.Load<Texture2D>("Images/akash"), new Vector2(100, 100), Color.Pink);
+            p1 = new Player(Content.Load<Texture2D>("Images/akash"), Vector2.Zero, Color.LightBlue,
+                            Keys.W, Keys.A, Keys.S, Keys.D, Keys.X);
+            p2 = new Player(Content.Load<Texture2D>("Images/akash"), new Vector2(100, 100), Color.Pink,
+                            Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L);
             base.Initialize();
         }
 
@@ -70,90 +71,8 @@ namespace MonoBomber.MacOS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            p1.Update();
-            p2.Update();
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) 
-            {
-                if (p1.pos.Y > 0) 
-                {
-                    p1.pos.Y -= SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                if (p1.pos.X > 0)
-                {
-                    p1.pos.X -= SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                if (p1.pos.Y + p1.texture.Height < graphics.GraphicsDevice.Viewport.Height)
-                {
-                    p1.pos.Y += SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                if (p1.pos.X + p1.texture.Width < graphics.GraphicsDevice.Viewport.Width)
-                {
-                    p1.pos.X += SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.X))
-            {
-                if (p1.pos.X + p1.texture.Width + bombTex.Width <= graphics.GraphicsDevice.Viewport.Width)
-                {
-                    p1.PlaceBomb(bombTex);
-                }
-            }
-
-            //////
-             
-            if (Keyboard.GetState().IsKeyDown(Keys.Up)) 
-            {
-                if (p2.pos.Y > 0)
-                {
-                    p2.pos.Y -= SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                if (p2.pos.X > 0)
-                {
-                    p2.pos.X -= SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                if (p2.pos.Y + p2.texture.Height < graphics.GraphicsDevice.Viewport.Height)
-                {
-                    p2.pos.Y += SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                if (p2.pos.X + p2.texture.Width < graphics.GraphicsDevice.Viewport.Width)
-                {
-                    p2.pos.X += SPEED;
-                }
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
-            {
-                if (p2.pos.X + p2.texture.Width + bombTex.Width <= graphics.GraphicsDevice.Viewport.Width)
-                {
-                    p2.PlaceBomb(bombTex);
-                }
-            }
+            p1.Update(Keyboard.GetState(), graphics.GraphicsDevice);
+            p2.Update(Keyboard.GetState(), graphics.GraphicsDevice);
 
             base.Update(gameTime);
         }

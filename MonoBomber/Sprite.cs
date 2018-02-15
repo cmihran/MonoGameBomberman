@@ -26,6 +26,6 @@ namespace MonoBomber.MacOS
             batch.Draw(texture, pos, color);
         }
 
-        abstract public void Update();
+       // abstract public void Update();
     }
 }
