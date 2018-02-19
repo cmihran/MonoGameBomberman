@@ -12,7 +12,7 @@ namespace MonoBomber.MacOS
     public class Player : Sprite
     {
         // how long it takes for bombs to recharge
-        private static readonly int BOMB_COOLDOWN_TIME = 0;
+        public static readonly int BOMB_COOLDOWN_TIME = 50;
 
         private readonly int SPEED = 8;
 
@@ -31,7 +31,7 @@ namespace MonoBomber.MacOS
         private readonly Keys bomb;
 
         public Player(Texture2D texture, Vector2 pos, Color color, 
-                Keys up, Keys left, Keys down, Keys right, Keys bomb) : base(texture, pos, color) {
+                      Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(texture, pos, color, game) {
             // bombs
             this.bombs = new List<Bomb>();
             this.bombCooldownLeft = 0;
@@ -106,7 +106,7 @@ namespace MonoBomber.MacOS
         public void PlaceBomb(Texture2D bombTex) {
             if(bombCooldownLeft == 0) {
                 bombCooldownLeft = BOMB_COOLDOWN_TIME;
-                bombs.Add(new Bomb(bombTex, new Vector2(pos.X + texture.Width, pos.Y), color));
+                bombs.Add(new Bomb(bombTex, new Vector2(pos.X + texture.Width, pos.Y), color, game));
             }
         }
 

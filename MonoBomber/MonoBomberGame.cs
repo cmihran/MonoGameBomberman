@@ -13,7 +13,7 @@ namespace MonoBomber.MacOS
     {
         // link to your graphics device (lets you set various settings on how things
         // should be drawn, etc)
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics;
 
         // tool to use when you want to draw sprites to the screen
         SpriteBatch spriteBatch;
@@ -23,10 +23,12 @@ namespace MonoBomber.MacOS
 
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
+        public static Texture2D rec;
 
         private SpriteFont font;
-        private int score = 0;
 
+        private int p1Score = 0;
+        private int p2Score = 0;
 
         public MonoBomberGame()
         {
@@ -43,9 +45,9 @@ namespace MonoBomber.MacOS
         protected override void Initialize()
         {
             p1 = new Player(Content.Load<Texture2D>("Images/akash"), Vector2.Zero, Color.LightBlue,
-                            Keys.W, Keys.A, Keys.S, Keys.D, Keys.X);
+                            Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
             p2 = new Player(Content.Load<Texture2D>("Images/akash"), new Vector2(100, 100), Color.Pink,
-                            Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L);
+                            Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
 
             font = Content.Load<SpriteFont>("fontScore");
 
@@ -81,6 +83,18 @@ namespace MonoBomber.MacOS
             p1.Update(Keyboard.GetState(), graphics.GraphicsDevice);
             p2.Update(Keyboard.GetState(), graphics.GraphicsDevice);
 
+            foreach(Bomb b in p1.bombs) {
+                if(p2.CollidesWith(b)) {
+                    p1Score++;
+                }
+            }
+
+            foreach(Bomb b in p2.bombs) {
+                if(p1.CollidesWith(b)) {
+                    p2Score++;
+                }
+            }
+
             base.Update(gameTime);
         }
 
@@ -100,7 +114,8 @@ namespace MonoBomber.MacOS
             p1.Draw(spriteBatch);
             p2.Draw(spriteBatch);
 
-            spriteBatch.DrawString(font, "Score", new Vector2(100, 100), Color.Black);
+            spriteBatch.DrawString(font, "P1 Score: " + p1Score, new Vector2(100, 100), Color.Black);
+            spriteBatch.DrawString(font, "P2 Score: " + p2Score, new Vector2(500, 100), Color.Black);
 
 
             ///////

@@ -14,18 +14,36 @@ namespace MonoBomber.MacOS
         public Vector2 pos;
         public Color color;
 
-        public Sprite(Texture2D texture, Vector2 pos, Color color)
+        public MonoBomberGame game;
+
+        public Sprite(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game)
         {
             this.texture = texture;
             this.pos = pos;
             this.color = color;
+            this.game = game;
         }
 
-        public void Draw(SpriteBatch batch)
-        {
+        public void Draw(SpriteBatch batch) {
+            Texture2D rec = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
+            rec.SetData(new[] { Color.White });
+
+            batch.Draw(rec, MakeBounding(), color);
+
             batch.Draw(texture, pos, color);
         }
 
        // abstract public void Update();
+
+        public Boolean CollidesWith(Sprite other) {
+            return this.MakeBounding().Intersects(other.MakeBounding());
+        }
+
+        private Rectangle MakeBounding() {
+            return new Rectangle(
+                new Point((int)pos.X, (int)pos.Y),
+                new Point(texture.Width, texture.Height)
+            );
+        }
     }
 }
