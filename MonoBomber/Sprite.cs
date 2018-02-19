@@ -8,7 +8,7 @@ namespace MonoBomber.MacOS
     /// A Sprite is an game object with a texture and a position in 2D.
     /// It should not be instantiated on its own so it is abstract
     /// </summary>
-    abstract public class Sprite
+    public class Sprite
     {
         public Texture2D texture;
         public Vector2 pos;
