@@ -61,3 +61,10 @@
 /processorParam:TextureFormat=Color
 /build:Images/explode.png
 
+#begin fontScore.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fontScore.spritefont
+

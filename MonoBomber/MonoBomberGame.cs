@@ -24,6 +24,9 @@ namespace MonoBomber.MacOS
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
 
+        private SpriteFont font;
+        private int score = 0;
+
 
         public MonoBomberGame()
         {
@@ -43,6 +46,10 @@ namespace MonoBomber.MacOS
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X);
             p2 = new Player(Content.Load<Texture2D>("Images/akash"), new Vector2(100, 100), Color.Pink,
                             Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L);
+
+            font = Content.Load<SpriteFont>("fontScore");
+
+
             base.Initialize();
         }
 
@@ -92,6 +99,8 @@ namespace MonoBomber.MacOS
 
             p1.Draw(spriteBatch);
             p2.Draw(spriteBatch);
+
+            spriteBatch.DrawString(font, "Score", new Vector2(100, 100), Color.Black);
 
 
             ///////
