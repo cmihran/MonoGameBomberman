@@ -20,18 +20,6 @@
 /processorParam:TextureFormat=Compressed
 /build:fontScore.spritefont
 
-#begin Images/akash.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/akash.png
-
 #begin Images/bomb.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -56,7 +44,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/explode.png
 
-#begin Images/smiley.jpg
+#begin Images/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -66,5 +54,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/smiley.jpg
+/build:Images/player.png
 

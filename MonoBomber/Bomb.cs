@@ -7,16 +7,19 @@ namespace MonoBomber.MacOS
 {
     public class Bomb : Sprite
     {
+        // who this bomb belongs to
+        private Player owner;
 
         // time to explode
         private int timer;
 
         // amount of time bomb lingers after exploding
-        private readonly int LINGER_TIME = -25;
+        public const int LINGER_TIME = -25;
 
         private List<Sprite> explosions;
 
-        public Bomb(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game) : base(texture, pos, color, game) {
+        public Bomb(Player owner, Vector2 pos, Color color, MonoBomberGame game) : base(MonoBomberGame.bombTex, pos, color, game) {
+            this.owner = owner;
             this.timer = Player.BOMB_COOLDOWN_TIME;
             this.explosions = new List<Sprite>();
         }
@@ -28,11 +31,11 @@ namespace MonoBomber.MacOS
             timer--;
         }
 
-        public new void Draw(SpriteBatch batch) {
-            base.Draw(batch);
+        public new void Draw() {
+            base.Draw();
 
             foreach(Sprite ex in explosions) {
-                ex.Draw(batch);
+                ex.Draw();
             }
         }
 

@@ -62,6 +62,9 @@
     <Compile Include="Player.cs" />
     <Compile Include="Bomb.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="EmptyClass.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

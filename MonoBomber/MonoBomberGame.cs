@@ -16,19 +16,24 @@ namespace MonoBomber.MacOS
         public GraphicsDeviceManager graphics;
 
         // tool to use when you want to draw sprites to the screen
-        SpriteBatch spriteBatch;
+        public SpriteBatch spriteBatch;
 
         Player p1;
         Player p2;
 
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
-        public static Texture2D rec;
+        public static Texture2D player;
+        public static Texture2D tileTex;
 
         private SpriteFont font;
 
         private int p1Score = 0;
         private int p2Score = 0;
+
+        private const int NUM_TILES = 5;
+        private const int TILE_LEN = 75;
+        public Tile[ , ] tiles;
 
         public MonoBomberGame()
         {
@@ -44,15 +49,20 @@ namespace MonoBomber.MacOS
         /// </summary>
         protected override void Initialize()
         {
-            p1 = new Player(Content.Load<Texture2D>("Images/akash"), Vector2.Zero, Color.LightBlue,
+            base.Initialize();
+
+            p1 = new Player(player, Vector2.Zero, Color.LightBlue,
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
-            p2 = new Player(Content.Load<Texture2D>("Images/akash"), new Vector2(100, 100), Color.Pink,
+            p2 = new Player(player, new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
                             Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
 
-            font = Content.Load<SpriteFont>("fontScore");
+            tiles = new Tile[NUM_TILES, NUM_TILES];
+            for (int x = 0; x < NUM_TILES; x++) {
+                for (int y = 0; y < NUM_TILES; y++) {
+                    tiles[x, y] = new Tile(this, new Vector2(x * TILE_LEN, y * TILE_LEN));
+                }
+            }
 
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -64,8 +74,19 @@ namespace MonoBomber.MacOS
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            tileTex = new Texture2D(GraphicsDevice, TILE_LEN, TILE_LEN);
+            tileTex.CreateBorder(5, Color.SlateGray);
+
+            graphics.PreferredBackBufferWidth = TILE_LEN * NUM_TILES;  
+            graphics.PreferredBackBufferHeight = TILE_LEN * NUM_TILES;
+            graphics.ApplyChanges();
+
+            font = Content.Load<SpriteFont>("fontScore");
+
+            player = this.Content.Load<Texture2D>("Images/player");
             bombTex = this.Content.Load<Texture2D>("Images/bomb");
             explodeTex = this.Content.Load<Texture2D>("Images/explode");
+
         }
 
         /// <summary>
@@ -80,20 +101,25 @@ namespace MonoBomber.MacOS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            foreach(Tile tile in tiles) {
+                tile.Update();
+            }
+
             p1.Update(Keyboard.GetState(), graphics.GraphicsDevice);
             p2.Update(Keyboard.GetState(), graphics.GraphicsDevice);
 
-            foreach(Bomb b in p1.bombs) {
-                if(p2.CollidesWith(b)) {
-                    p1Score++;
-                }
-            }
 
-            foreach(Bomb b in p2.bombs) {
-                if(p1.CollidesWith(b)) {
-                    p2Score++;
-                }
-            }
+            //foreach(Bomb b in p1.bombs) {
+            //    if(p2.CollidesWith(b)) {
+            //        p1Score++;
+            //    }
+            //}
+
+            //foreach(Bomb b in p2.bombs) {
+            //    if(p1.CollidesWith(b)) {
+            //        p2Score++;
+            //    }
+            //}
 
             base.Update(gameTime);
         }
@@ -104,18 +130,22 @@ namespace MonoBomber.MacOS
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            graphics.GraphicsDevice.Clear(Color.ForestGreen);
 
             spriteBatch.Begin();
 
             ///////
 
+            foreach (Tile t in tiles) {
+                t.Draw();
+            }
 
-            p1.Draw(spriteBatch);
-            p2.Draw(spriteBatch);
+            p1.Draw();
+            p2.Draw();
 
-            spriteBatch.DrawString(font, "P1 Score: " + p1Score, new Vector2(100, 100), Color.Black);
-            spriteBatch.DrawString(font, "P2 Score: " + p2Score, new Vector2(500, 100), Color.Black);
+            spriteBatch.DrawString(font, "P1 Score: " + p1Score, new Vector2(0, 0), Color.Black);
+            spriteBatch.DrawString(font, "P2 Score: " + p2Score, new Vector2((NUM_TILES - 2) * TILE_LEN, 0), Color.Black);
+
 
 
             ///////
@@ -124,5 +154,7 @@ namespace MonoBomber.MacOS
 
             base.Draw(gameTime);
         }
+
+
     }
 }

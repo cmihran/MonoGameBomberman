@@ -12,16 +12,12 @@ namespace MonoBomber.MacOS
     public class Player : Sprite
     {
         // how long it takes for bombs to recharge
-        public static readonly int BOMB_COOLDOWN_TIME = 50;
-
-        private readonly int SPEED = 8;
+        public const int BOMB_COOLDOWN_TIME = 50 - Bomb.LINGER_TIME;
+        private const int SPEED = 8;
 
 
         // how long this player has left until it can bomb again
         private int bombCooldownLeft;
-
-        // list of bombs that belong to this player
-        public List<Bomb> bombs;
 
         // keys the player uses
         private readonly Keys up;
@@ -33,7 +29,6 @@ namespace MonoBomber.MacOS
         public Player(Texture2D texture, Vector2 pos, Color color, 
                       Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(texture, pos, color, game) {
             // bombs
-            this.bombs = new List<Bomb>();
             this.bombCooldownLeft = 0;
 
             // keys
@@ -44,18 +39,18 @@ namespace MonoBomber.MacOS
             this.bomb = bomb;
         }
 
-        public new void Draw(SpriteBatch batch) {
+        public new void Draw() {
             // draw the player
-            base.Draw(batch);
+            base.Draw();
 
             // go through player's bombs and either remove or draw them
-            for (int i = bombs.Count - 1; i >= 0; i--) {
-                if(bombs[i].ShouldReap()) {
-                    bombs.RemoveAt(i); 
-                } else {
-                    bombs[i].Draw(batch);
-                }
-            }
+            //for (int i = bombs.Count - 1; i >= 0; i--) {
+            //    if(bombs[i].ShouldReap()) {
+            //        bombs.RemoveAt(i); 
+            //    } else {
+            //        bombs[i].Draw();
+            //    }
+            //}
         }
 
         public void Update(KeyboardState keyboardState, GraphicsDevice graphics) {
@@ -86,15 +81,16 @@ namespace MonoBomber.MacOS
                 }
             }
             if (Keyboard.GetState().IsKeyDown(bomb)) {
-                if (pos.X + texture.Width + MonoBomberGame.bombTex.Width <= graphics.Viewport.Width) {
+                
+                //if (pos.X + texture.Width + MonoBomberGame.bombTex.Width <= graphics.Viewport.Width) {
                     PlaceBomb(MonoBomberGame.bombTex);
-                }
+                //}
             }
 
             // update the bombs that belong to this player
-            foreach(Bomb b in bombs) {
-                b.Update();
-            }
+            //foreach(Bomb b in bombs) {
+            //    b.Update();
+            //}
         }
 
         // true if this player can place a bomb
@@ -105,8 +101,13 @@ namespace MonoBomber.MacOS
         // places a bomb to the right of this player
         public void PlaceBomb(Texture2D bombTex) {
             if(bombCooldownLeft == 0) {
-                bombCooldownLeft = BOMB_COOLDOWN_TIME;
-                bombs.Add(new Bomb(bombTex, new Vector2(pos.X + texture.Width, pos.Y), color, game));
+                if(getTile().AttemptPlaceBomb(this)) {
+                    bombCooldownLeft = BOMB_COOLDOWN_TIME;
+                }
+                //bombCooldownLeft = BOMB_COOLDOWN_TIME;
+                //Point tile = this.getTile();
+                //Vector2 bombPos = new Vector2(tile.X * MonoBomberGame.tile.Width, tile.Y * MonoBomberGame.tile.Height);
+                //bombs.Add(new Bomb(bombTex, bombPos, color, game));
             }
         }
 

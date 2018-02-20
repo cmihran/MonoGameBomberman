@@ -24,16 +24,26 @@ namespace MonoBomber.MacOS
             this.game = game;
         }
 
-        public void Draw(SpriteBatch batch) {
-            Texture2D rec = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
-            rec.SetData(new[] { Color.White });
-
-            batch.Draw(rec, MakeBounding(), color);
-
-            batch.Draw(texture, pos, color);
+        public Vector2 getCenter() {
+            return new Vector2(pos.X + (texture.Width / 2), pos.Y + (texture.Height / 2));
         }
 
-       // abstract public void Update();
+        public Tile getTile() {
+            int x = (int) Math.Floor(this.getCenter().X / MonoBomberGame.tileTex.Width);
+            int y = (int) Math.Floor(this.getCenter().Y / MonoBomberGame.tileTex.Height);
+            return game.tiles[x, y];
+        }
+
+        public void Draw() {
+            //Texture2D rec = new Texture2D(game.graphics.GraphicsDevice, 1, 1);
+            //rec.SetData(new[] { Color.White });
+
+            //batch.Draw(rec, MakeBounding(), color);
+
+            game.spriteBatch.Draw(texture, pos, color);
+        }
+
+        //abstract public void Update();
 
         public Boolean CollidesWith(Sprite other) {
             return this.MakeBounding().Intersects(other.MakeBounding());
