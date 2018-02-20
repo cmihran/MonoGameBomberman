@@ -28,9 +28,6 @@ namespace MonoBomber.MacOS
 
         private SpriteFont font;
 
-        private int p1Score = 0;
-        private int p2Score = 0;
-
         public const int NUM_TILES = 10;
         private const int TILE_LEN = 75;
         public Tile[ , ] tiles;
@@ -114,7 +111,16 @@ namespace MonoBomber.MacOS
 
             // players
             p1.Update();
+            if(p1.health == 0) {
+                p1.health = Player.BASE_HEALTH;
+                p2.wins++;
+            }
             p2.Update();
+            if (p2.health == 0)
+            {
+                p2.health = Player.BASE_HEALTH;
+                p1.wins++;
+            }
 
             ////////////////////////////
 
@@ -143,8 +149,12 @@ namespace MonoBomber.MacOS
             p2.Draw();
 
             // text
-            spriteBatch.DrawString(font, "P1 Score: " + p1Score, new Vector2(0, 0), Color.Black);
-            spriteBatch.DrawString(font, "P2 Score: " + p2Score, new Vector2((NUM_TILES - 2) * TILE_LEN, 0), Color.Black);
+            spriteBatch.DrawString(font, "P1 Health: " + p1.health, new Vector2(0, 0), p1.color);
+            spriteBatch.DrawString(font, "P1 Wins  : " + p1.wins, new Vector2(0, 20), p1.color);
+
+            spriteBatch.DrawString(font, "P2 Health: " + p2.health, new Vector2((NUM_TILES - 2) * TILE_LEN, 0), p2.color);
+            spriteBatch.DrawString(font, "P2 Wins  : " + p2.wins, new Vector2((NUM_TILES - 2) * TILE_LEN, 20), p2.color);
+
 
             ////////////////////////////
 

@@ -14,9 +14,14 @@ namespace MonoBomber.MacOS
         // how long it takes for bombs to recharge
         public const int BOMB_COOLDOWN_TIME = 50 + Explosion.LINGER_TIME;
         private const int SPEED = 8;
+        public const int BASE_HEALTH = 100;
 
         // how long this player has left until it can bomb again
         private int bombCooldownLeft;
+
+        public int health;
+
+        public int wins;
 
         // keys the player uses
         private readonly Keys up;
@@ -29,6 +34,9 @@ namespace MonoBomber.MacOS
                       Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(texture, pos, color, game) {
             // bombs
             this.bombCooldownLeft = 0;
+
+            this.health = BASE_HEALTH;
+            this.wins = 0;
 
             // keys
             this.up = up;
@@ -44,8 +52,8 @@ namespace MonoBomber.MacOS
         }
 
         public override void Update() {
-            if(getTile().hasExplosion()) {
-                //Console.WriteLine("u died " + pos);
+            if(getTile().hasExplosion() && health > 0) {
+                health--;
             }
 
             // lower the bomb cooldown
