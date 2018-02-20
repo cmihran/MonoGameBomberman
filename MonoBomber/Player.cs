@@ -42,15 +42,6 @@ namespace MonoBomber.MacOS
         public new void Draw() {
             // draw the player
             base.Draw();
-
-            // go through player's bombs and either remove or draw them
-            //for (int i = bombs.Count - 1; i >= 0; i--) {
-            //    if(bombs[i].ShouldReap()) {
-            //        bombs.RemoveAt(i); 
-            //    } else {
-            //        bombs[i].Draw();
-            //    }
-            //}
         }
 
         public void Update(KeyboardState keyboardState, GraphicsDevice graphics) {
@@ -82,15 +73,8 @@ namespace MonoBomber.MacOS
             }
             if (Keyboard.GetState().IsKeyDown(bomb)) {
                 
-                //if (pos.X + texture.Width + MonoBomberGame.bombTex.Width <= graphics.Viewport.Width) {
-                    PlaceBomb(MonoBomberGame.bombTex);
-                //}
+                PlaceBomb(MonoBomberGame.bombTex);
             }
-
-            // update the bombs that belong to this player
-            //foreach(Bomb b in bombs) {
-            //    b.Update();
-            //}
         }
 
         // true if this player can place a bomb
@@ -104,10 +88,6 @@ namespace MonoBomber.MacOS
                 if(getTile().AttemptPlaceBomb(this)) {
                     bombCooldownLeft = BOMB_COOLDOWN_TIME;
                 }
-                //bombCooldownLeft = BOMB_COOLDOWN_TIME;
-                //Point tile = this.getTile();
-                //Vector2 bombPos = new Vector2(tile.X * MonoBomberGame.tile.Width, tile.Y * MonoBomberGame.tile.Height);
-                //bombs.Add(new Bomb(bombTex, bombPos, color, game));
             }
         }
 
