@@ -6,21 +6,21 @@ namespace MonoBomber.MacOS
 {
     public class Tile : Sprite 
     {
-        private Bomb bomb;
+        private Sprite occupant;
 
 
-        public Tile(MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game) 
-        {
-            
+        public Tile(MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game)  {
+        
         }
 
-        public void Update() {
-            if (bomb != null)
-            {
-                bomb.Update();
-                if (bomb.ShouldReap())
-                {
-                    bomb = null;
+        public override void Update() {
+            if (occupant != null) {
+                // update occupant
+                occupant.Update();
+
+                // check for reaping
+                if (this.occupant is TempSprite sprite && sprite.ShouldReap()) {
+                    this.occupant = null;
                 }
             }
         }
@@ -28,23 +28,26 @@ namespace MonoBomber.MacOS
         public new void Draw() {
             base.Draw();
 
-            if(bomb != null) {
-                bomb.Draw();
+            if(occupant != null) {
+                occupant.Draw();
             }
         }
 
-        public Boolean AttemptPlaceBomb(Player owner) {
-            if(bomb != null) {
-                return false;
-            } else {
-                bomb = new Bomb(owner, this.pos, owner.color, game);
-                return true;
-            }
+        public bool isOccupied() {
+            return occupant != null;
+        }
+
+        public void PlaceSprite(Sprite sprite) {
+            occupant = sprite;
         }
 
         public override string ToString()
         {
             return "[Tile: " + pos + "]";
+        }
+
+        public bool hasExplosion() {
+            return occupant is Explosion;
         }
     }
 }

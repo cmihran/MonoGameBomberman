@@ -31,7 +31,7 @@ namespace MonoBomber.MacOS
         private int p1Score = 0;
         private int p2Score = 0;
 
-        private const int NUM_TILES = 5;
+        public const int NUM_TILES = 10;
         private const int TILE_LEN = 75;
         public Tile[ , ] tiles;
 
@@ -50,6 +50,8 @@ namespace MonoBomber.MacOS
         protected override void Initialize()
         {
             base.Initialize();
+
+            ////////////////////////////
 
             p1 = new Player(player, Vector2.Zero, Color.LightBlue,
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
@@ -73,6 +75,8 @@ namespace MonoBomber.MacOS
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            ////////////////////////////
 
             tileTex = new Texture2D(GraphicsDevice, TILE_LEN, TILE_LEN);
             tileTex.CreateBorder(5, Color.SlateGray);
@@ -101,25 +105,18 @@ namespace MonoBomber.MacOS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            ////////////////////////////
+
+            // tiles
             foreach(Tile tile in tiles) {
                 tile.Update();
             }
 
-            p1.Update(Keyboard.GetState(), graphics.GraphicsDevice);
-            p2.Update(Keyboard.GetState(), graphics.GraphicsDevice);
+            // players
+            p1.Update();
+            p2.Update();
 
-
-            //foreach(Bomb b in p1.bombs) {
-            //    if(p2.CollidesWith(b)) {
-            //        p1Score++;
-            //    }
-            //}
-
-            //foreach(Bomb b in p2.bombs) {
-            //    if(p1.CollidesWith(b)) {
-            //        p2Score++;
-            //    }
-            //}
+            ////////////////////////////
 
             base.Update(gameTime);
         }
@@ -134,21 +131,22 @@ namespace MonoBomber.MacOS
 
             spriteBatch.Begin();
 
-            ///////
+            ////////////////////////////
 
+            // tiles
             foreach (Tile t in tiles) {
                 t.Draw();
             }
 
+            // players
             p1.Draw();
             p2.Draw();
 
+            // text
             spriteBatch.DrawString(font, "P1 Score: " + p1Score, new Vector2(0, 0), Color.Black);
             spriteBatch.DrawString(font, "P2 Score: " + p2Score, new Vector2((NUM_TILES - 2) * TILE_LEN, 0), Color.Black);
 
-
-
-            ///////
+            ////////////////////////////
 
             spriteBatch.End();
 

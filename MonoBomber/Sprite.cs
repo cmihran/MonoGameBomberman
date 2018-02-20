@@ -8,7 +8,7 @@ namespace MonoBomber.MacOS
     /// A Sprite is an game object with a texture and a position in 2D.
     /// It should not be instantiated on its own so it is abstract
     /// </summary>
-    public class Sprite
+    public abstract class Sprite
     {
         public Texture2D texture;
         public Vector2 pos;
@@ -29,9 +29,16 @@ namespace MonoBomber.MacOS
         }
 
         public Tile getTile() {
-            int x = (int) Math.Floor(this.getCenter().X / MonoBomberGame.tileTex.Width);
-            int y = (int) Math.Floor(this.getCenter().Y / MonoBomberGame.tileTex.Height);
-            return game.tiles[x, y];
+            return game.tiles[getTileXIndex(), getTileYIndex()];
+        }
+
+        public int getTileXIndex() {
+            return (int)Math.Floor(this.getCenter().X / MonoBomberGame.tileTex.Width);
+        }
+
+        public int getTileYIndex()
+        {
+            return (int)Math.Floor(this.getCenter().Y / MonoBomberGame.tileTex.Height);;
         }
 
         public void Draw() {
@@ -43,7 +50,7 @@ namespace MonoBomber.MacOS
             game.spriteBatch.Draw(texture, pos, color);
         }
 
-        //abstract public void Update();
+        abstract public void Update();
 
         public Boolean CollidesWith(Sprite other) {
             return this.MakeBounding().Intersects(other.MakeBounding());
@@ -55,5 +62,6 @@ namespace MonoBomber.MacOS
                 new Point(texture.Width, texture.Height)
             );
         }
+
     }
 }

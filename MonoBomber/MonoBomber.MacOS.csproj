@@ -63,8 +63,9 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="EmptyClass.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="Explosion.cs" />
+    <Compile Include="TempSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
