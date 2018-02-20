@@ -1,10 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace MonoBomber.MacOS
-{
-    public class Explosion : Sprite, TempSprite
-    {
+namespace MonoBomber.MacOS {
+    public class Explosion : Sprite, TempSprite {
         Player owner;
 
         private int timer;
@@ -17,7 +15,7 @@ namespace MonoBomber.MacOS
         }
 
         public override void Update() {
-            if(timer > 0) {
+            if (timer > 0) {
                 timer--;
             }
         }

@@ -2,22 +2,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoBomber.MacOS
-{
+namespace MonoBomber.MacOS {
     /// <summary>
     /// A Sprite is an game object with a texture and a position in 2D.
     /// It should not be instantiated on its own so it is abstract
     /// </summary>
-    public abstract class Sprite
-    {
+    public abstract class Sprite {
         public Texture2D texture;
         public Vector2 pos;
         public Color color;
 
         public MonoBomberGame game;
 
-        public Sprite(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game)
-        {
+        public Sprite(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game) {
             this.texture = texture;
             this.pos = pos;
             this.color = color;
@@ -36,9 +33,8 @@ namespace MonoBomber.MacOS
             return (int)Math.Floor(this.getCenter().X / MonoBomberGame.tileTex.Width);
         }
 
-        public int getTileYIndex()
-        {
-            return (int)Math.Floor(this.getCenter().Y / MonoBomberGame.tileTex.Height);;
+        public int getTileYIndex() {
+            return (int)Math.Floor(this.getCenter().Y / MonoBomberGame.tileTex.Height); ;
         }
 
         public void Draw() {

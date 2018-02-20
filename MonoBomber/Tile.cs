@@ -2,15 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoBomber.MacOS 
-{
-    public class Tile : Sprite 
-    {
+namespace MonoBomber.MacOS {
+    public class Tile : Sprite {
         private Sprite occupant;
 
 
-        public Tile(MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game)  {
-        
+        public Tile(MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game) {
+
         }
 
         public override void Update() {
@@ -28,7 +26,7 @@ namespace MonoBomber.MacOS
         public new void Draw() {
             base.Draw();
 
-            if(occupant != null) {
+            if (occupant != null) {
                 occupant.Draw();
             }
         }
@@ -41,8 +39,7 @@ namespace MonoBomber.MacOS
             occupant = sprite;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return "[Tile: " + pos + "]";
         }
 

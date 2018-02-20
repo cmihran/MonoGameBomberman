@@ -4,13 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoBomber.MacOS
-{
+namespace MonoBomber.MacOS {
     /// <summary>
     /// A player that is capable of placing bombs
     /// </summary>
-    public class Player : Sprite
-    {
+    public class Player : Sprite {
         // how long it takes for bombs to recharge
         public const int BOMB_COOLDOWN_TIME = 50 + Explosion.LINGER_TIME;
         private const int SPEED = 8;
@@ -30,8 +28,8 @@ namespace MonoBomber.MacOS
         private readonly Keys right;
         private readonly Keys bomb;
 
-        public Player(Texture2D texture, Vector2 pos, Color color, 
-                      Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(texture, pos, color, game) {
+        public Player(Vector2 pos, Color color,
+                      Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(MonoBomberGame.playerTex, pos, color, game) {
             // bombs
             this.bombCooldownLeft = 0;
 
@@ -52,15 +50,15 @@ namespace MonoBomber.MacOS
         }
 
         public override void Update() {
-            if(getTile().hasExplosion() && health > 0) {
+            if (getTile().hasExplosion() && health > 0) {
                 health--;
             }
 
             // lower the bomb cooldown
-            if(bombCooldownLeft > 0) {
+            if (bombCooldownLeft > 0) {
                 bombCooldownLeft--;
             }
-                
+
             // movement
             KeyboardState state = Keyboard.GetState();
 
@@ -70,7 +68,7 @@ namespace MonoBomber.MacOS
                     pos.Y -= SPEED;
                 }
             } else if (state.IsKeyDown(down)) {
-       
+
                 if (pos.Y + texture.Height < game.graphics.GraphicsDevice.Viewport.Height) {
                     pos.Y += SPEED;
                 }
@@ -82,15 +80,14 @@ namespace MonoBomber.MacOS
                     pos.X -= SPEED;
                 }
             } else if (state.IsKeyDown(right)) {
-                if (pos.X + texture.Width < game.graphics.GraphicsDevice.Viewport.Width)
-                {
+                if (pos.X + texture.Width < game.graphics.GraphicsDevice.Viewport.Width) {
                     pos.X += SPEED;
                 }
             }
 
             // check bomb
             if (state.IsKeyDown(bomb)) {
-                if(HasBomb()) {
+                if (HasBomb()) {
                     PlaceBomb();
                 }
             }
@@ -103,9 +100,9 @@ namespace MonoBomber.MacOS
 
         // places a bomb to the right of this player
         public void PlaceBomb() {
-            if(bombCooldownLeft == 0) {
+            if (bombCooldownLeft == 0) {
                 Tile tile = getTile();
-                if(!tile.isOccupied()) {
+                if (!tile.isOccupied()) {
                     tile.PlaceSprite(new Bomb(this, tile.pos, color, game));
                     bombCooldownLeft = BOMB_COOLDOWN_TIME;
                 }

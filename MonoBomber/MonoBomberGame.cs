@@ -4,13 +4,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace MonoBomber.MacOS
-{
+namespace MonoBomber.MacOS {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class MonoBomberGame : Game
-    {
+    public class MonoBomberGame : Game {
         // link to your graphics device (lets you set various settings on how things
         // should be drawn, etc)
         public GraphicsDeviceManager graphics;
@@ -23,17 +21,17 @@ namespace MonoBomber.MacOS
 
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
-        public static Texture2D player;
+        public static Texture2D playerTex;
         public static Texture2D tileTex;
+        public static Texture2D wallTex;
 
         private SpriteFont font;
 
         public const int NUM_TILES = 10;
         private const int TILE_LEN = 75;
-        public Tile[ , ] tiles;
+        public Tile[,] tiles;
 
-        public MonoBomberGame()
-        {
+        public MonoBomberGame() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -44,15 +42,14 @@ namespace MonoBomber.MacOS
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
             base.Initialize();
 
             ////////////////////////////
 
-            p1 = new Player(player, Vector2.Zero, Color.LightBlue,
+            p1 = new Player(Vector2.Zero, Color.LightBlue,
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
-            p2 = new Player(player, new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
+            p2 = new Player(new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
                             Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
 
             tiles = new Tile[NUM_TILES, NUM_TILES];
@@ -68,8 +65,7 @@ namespace MonoBomber.MacOS
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent()
-        {
+        protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -78,13 +74,13 @@ namespace MonoBomber.MacOS
             tileTex = new Texture2D(GraphicsDevice, TILE_LEN, TILE_LEN);
             tileTex.CreateBorder(5, Color.SlateGray);
 
-            graphics.PreferredBackBufferWidth = TILE_LEN * NUM_TILES;  
+            graphics.PreferredBackBufferWidth = TILE_LEN * NUM_TILES;
             graphics.PreferredBackBufferHeight = TILE_LEN * NUM_TILES;
             graphics.ApplyChanges();
 
             font = Content.Load<SpriteFont>("fontScore");
 
-            player = this.Content.Load<Texture2D>("Images/player");
+            playerTex = this.Content.Load<Texture2D>("Images/player");
             bombTex = this.Content.Load<Texture2D>("Images/bomb");
             explodeTex = this.Content.Load<Texture2D>("Images/explode");
 
@@ -95,8 +91,7 @@ namespace MonoBomber.MacOS
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             // For Mobile devices, this logic will close the Game when the Back button is pressed
             // Exit() is obsolete on iOS
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -105,19 +100,18 @@ namespace MonoBomber.MacOS
             ////////////////////////////
 
             // tiles
-            foreach(Tile tile in tiles) {
+            foreach (Tile tile in tiles) {
                 tile.Update();
             }
 
             // players
             p1.Update();
-            if(p1.health == 0) {
+            if (p1.health == 0) {
                 p1.health = Player.BASE_HEALTH;
                 p2.wins++;
             }
             p2.Update();
-            if (p2.health == 0)
-            {
+            if (p2.health == 0) {
                 p2.health = Player.BASE_HEALTH;
                 p1.wins++;
             }
@@ -131,8 +125,7 @@ namespace MonoBomber.MacOS
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             graphics.GraphicsDevice.Clear(Color.ForestGreen);
 
             spriteBatch.Begin();

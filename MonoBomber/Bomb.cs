@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoBomber.MacOS
-{
-    public class Bomb : Sprite
-    {
+namespace MonoBomber.MacOS {
+    public class Bomb : Sprite {
         // who this bomb belongs to
         public Player owner;
 
@@ -21,7 +19,7 @@ namespace MonoBomber.MacOS
         }
 
         public override void Update() {
-            if(timer == 0) {
+            if (timer == 0) {
                 Explode();
             }
             timer--;
@@ -35,7 +33,7 @@ namespace MonoBomber.MacOS
 
             // going right
             int xCur = xIndex + 1;
-            while(xCur < MonoBomberGame.NUM_TILES && !game.tiles[xCur, yIndex].isOccupied()) {
+            while (xCur < MonoBomberGame.NUM_TILES && !game.tiles[xCur, yIndex].isOccupied()) {
                 game.tiles[xCur, yIndex].PlaceSprite(new Explosion(owner, game.tiles[xCur, yIndex].pos, color, game));
                 xCur++;
             }
@@ -48,7 +46,7 @@ namespace MonoBomber.MacOS
             }
 
             // going down
-            int yCur = yIndex + 1;;
+            int yCur = yIndex + 1; ;
             while (yCur < MonoBomberGame.NUM_TILES && !game.tiles[xIndex, yCur].isOccupied()) {
                 game.tiles[xIndex, yCur].PlaceSprite(new Explosion(owner, game.tiles[xIndex, yCur].pos, color, game));
                 yCur++;
