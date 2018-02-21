@@ -46,5 +46,29 @@ namespace MonoBomber.MacOS {
         public bool hasExplosion() {
             return occupant is Explosion;
         }
+
+        public bool nextToExplosion() {
+            int myX = getTileXIndex();
+            int myY = getTileYIndex();
+
+            // check left
+            if (myX - 1 >= 0 && game.tiles[myX - 1, myY].hasExplosion()) {
+                return true;
+            }
+            // check right
+            else if (myX + 1 < MonoBomberGame.NUM_TILES && game.tiles[myX + 1, myY].hasExplosion()) {
+                return true;
+            }
+            // check up
+            else if (myY - 1 >= 0 && game.tiles[myX, myY - 1].hasExplosion()) {
+                return true;
+            }
+            // check down
+            else if (myY + 1 < MonoBomberGame.NUM_TILES && game.tiles[myX, myY + 1].hasExplosion()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

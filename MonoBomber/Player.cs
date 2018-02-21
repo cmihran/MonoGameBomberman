@@ -11,6 +11,8 @@ namespace MonoBomber.MacOS {
     public class Player : Sprite {
         // how long it takes for bombs to recharge
         public const int BOMB_COOLDOWN_TIME = 50 + Explosion.LINGER_TIME;
+
+        // stats
         private const int SPEED = 8;
         public const int BASE_HEALTH = 100;
 

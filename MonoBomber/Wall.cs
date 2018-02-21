@@ -3,17 +3,30 @@ using Microsoft.Xna.Framework;
 
 namespace MonoBomber.MacOS {
     public class Wall : Sprite, TempSprite {
+        
         private int health;
 
-        public Wall(Vector2 pos, MonoBomberGame game) : base(MonoBomberGame.wallTex, pos, Color.Gray, game) {
-        }
+        private const int BASE_HEALTH = 20;
 
-        public bool ShouldReap() {
-            throw new NotImplementedException();
+        public Wall(Vector2 pos, MonoBomberGame game) : base(MonoBomberGame.wallTex, pos, Color.White, game) {
+            this.health = Wall.BASE_HEALTH;
         }
 
         public override void Update() {
-            throw new NotImplementedException();
+            //if(getTileXIndex() == 5 && getTileYIndex() == 5) {
+                //Console.WriteLine(getTile().nextToExplosion());
+
+            //}
+            if(getTile().nextToExplosion()) {
+                if(health > 0) {
+                    health--;
+                }
+            }
         }
+
+        public bool ShouldReap() {
+            return health == 0;
+        }
+
     }
 }

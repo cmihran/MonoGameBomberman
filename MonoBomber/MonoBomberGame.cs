@@ -25,6 +25,8 @@ namespace MonoBomber.MacOS {
         public static Texture2D tileTex;
         public static Texture2D wallTex;
 
+        private const String IMG_DIR = "Images/";
+
         private SpriteFont font;
 
         public const int NUM_TILES = 10;
@@ -59,6 +61,8 @@ namespace MonoBomber.MacOS {
                 }
             }
 
+            Wall wall = new Wall(tiles[5, 5].pos, this);
+            tiles[5, 5].PlaceSprite(wall);
         }
 
         /// <summary>
@@ -74,15 +78,17 @@ namespace MonoBomber.MacOS {
             tileTex = new Texture2D(GraphicsDevice, TILE_LEN, TILE_LEN);
             tileTex.CreateBorder(5, Color.SlateGray);
 
+            wallTex = Content.Load<Texture2D>(IMG_DIR + "wall");
+
             graphics.PreferredBackBufferWidth = TILE_LEN * NUM_TILES;
             graphics.PreferredBackBufferHeight = TILE_LEN * NUM_TILES;
             graphics.ApplyChanges();
 
             font = Content.Load<SpriteFont>("fontScore");
 
-            playerTex = this.Content.Load<Texture2D>("Images/player");
-            bombTex = this.Content.Load<Texture2D>("Images/bomb");
-            explodeTex = this.Content.Load<Texture2D>("Images/explode");
+            playerTex = this.Content.Load<Texture2D>(IMG_DIR + "player");
+            bombTex = this.Content.Load<Texture2D>(IMG_DIR + "bomb");
+            explodeTex = this.Content.Load<Texture2D>(IMG_DIR + "explode");
 
         }
 

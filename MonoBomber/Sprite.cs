@@ -14,7 +14,7 @@ namespace MonoBomber.MacOS {
 
         public MonoBomberGame game;
 
-        public Sprite(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game) {
+        protected Sprite(Texture2D texture, Vector2 pos, Color color, MonoBomberGame game) {
             this.texture = texture;
             this.pos = pos;
             this.color = color;
