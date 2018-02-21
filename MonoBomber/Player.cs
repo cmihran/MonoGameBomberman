@@ -21,7 +21,7 @@ namespace MonoBomber.MacOS {
 
         public int health;
 
-        public int wins;
+        public int deaths;
 
         // keys the player uses
         private readonly Keys up;
@@ -36,7 +36,7 @@ namespace MonoBomber.MacOS {
             this.bombCooldownLeft = 0;
 
             this.health = BASE_HEALTH;
-            this.wins = 0;
+            this.deaths = 0;
 
             // keys
             this.up = up;
@@ -47,13 +47,21 @@ namespace MonoBomber.MacOS {
         }
 
         public new void Draw() {
-            // draw the player
             base.Draw();
+
+            game.spriteBatch.DrawString(MonoBomberGame.font, "Health: " + health, pos, Color.White);
+            game.spriteBatch.DrawString(MonoBomberGame.font, "Deaths: " + deaths, new Vector2(pos.X,20 + pos.Y), Color.White);
+
         }
 
         public override void Update() {
             if (getTile().hasExplosion() && health > 0) {
                 health--;
+            }
+
+            if(health <= 0) {
+                health = BASE_HEALTH;
+                deaths++;
             }
 
             // lower the bomb cooldown
@@ -96,9 +104,7 @@ namespace MonoBomber.MacOS {
         }
 
         // true if this player can place a bomb
-        public Boolean HasBomb() {
-            return bombCooldownLeft == 0;
-        }
+        public bool HasBomb() => (bombCooldownLeft == 0);
 
         // places a bomb to the right of this player
         public void PlaceBomb() {

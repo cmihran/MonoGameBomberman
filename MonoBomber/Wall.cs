@@ -24,9 +24,7 @@ namespace MonoBomber.MacOS {
             }
         }
 
-        public bool ShouldReap() {
-            return health == 0;
-        }
+        public bool ShouldReap() => (health == 0);
 
     }
 }

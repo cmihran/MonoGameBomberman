@@ -27,7 +27,7 @@ namespace MonoBomber.MacOS {
 
         private const String IMG_DIR = "Images/";
 
-        private SpriteFont font;
+        public static SpriteFont font;
 
         public const int NUM_TILES = 10;
         private const int TILE_LEN = 75;
@@ -112,15 +112,7 @@ namespace MonoBomber.MacOS {
 
             // players
             p1.Update();
-            if (p1.health == 0) {
-                p1.health = Player.BASE_HEALTH;
-                p2.wins++;
-            }
             p2.Update();
-            if (p2.health == 0) {
-                p2.health = Player.BASE_HEALTH;
-                p1.wins++;
-            }
 
             ////////////////////////////
 
@@ -146,14 +138,6 @@ namespace MonoBomber.MacOS {
             // players
             p1.Draw();
             p2.Draw();
-
-            // text
-            spriteBatch.DrawString(font, "P1 Health: " + p1.health, new Vector2(0, 0), p1.color);
-            spriteBatch.DrawString(font, "P1 Wins  : " + p1.wins, new Vector2(0, 20), p1.color);
-
-            spriteBatch.DrawString(font, "P2 Health: " + p2.health, new Vector2((NUM_TILES - 2) * TILE_LEN, 0), p2.color);
-            spriteBatch.DrawString(font, "P2 Wins  : " + p2.wins, new Vector2((NUM_TILES - 2) * TILE_LEN, 20), p2.color);
-
 
             ////////////////////////////
 

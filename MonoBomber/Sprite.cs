@@ -48,9 +48,7 @@ namespace MonoBomber.MacOS {
 
         abstract public void Update();
 
-        public Boolean CollidesWith(Sprite other) {
-            return this.MakeBounding().Intersects(other.MakeBounding());
-        }
+        public bool CollidesWith(Sprite other) => (this.MakeBounding().Intersects(other.MakeBounding()));
 
         private Rectangle MakeBounding() {
             return new Rectangle(
