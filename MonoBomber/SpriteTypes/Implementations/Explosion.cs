@@ -1,15 +1,15 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using MonoBomber.MacOS.SpriteTypes;
 
 namespace MonoBomber.MacOS {
-    public class Explosion : Sprite, TempSprite {
+    public class Explosion : TiledSprite, TempSprite {
+
         Player owner;
-
         private int timer;
-
         public const int LINGER_TIME = 25;
 
-        public Explosion(Player owner, Vector2 pos, Color color, MonoBomberGame game) : base(MonoBomberGame.explodeTex, pos, color, game) {
+        public Explosion(Player owner, Tile tile, MonoBomberGame game) : base(MonoBomberGame.explodeTex, tile, owner.Color, game) {
             this.owner = owner;
             this.timer = LINGER_TIME;
         }

@@ -59,14 +59,11 @@ namespace MonoBomber.MacOS {
             tiles = new Tile[NUM_TILES, NUM_TILES];
             for (int x = 0; x < NUM_TILES; x++) {
                 for (int y = 0; y < NUM_TILES; y++) {
-                    tiles[x, y] = new Tile(x, y, this, new Vector2(x * TILE_LEN, y * TILE_LEN));
+                    tiles[x, y] = new Tile(x, y, new Vector2(x * TILE_LEN, y * TILE_LEN), this);
                 }
             }
 
-            tiles[5, 5].PlaceSprite(new Wall(tiles[5, 5].pos, this));
-            tiles[5, 6].PlaceSprite(new Wall(tiles[5, 6].pos, this));
-            tiles[5, 4].PlaceSprite(new Wall(tiles[5, 4].pos, this));
-
+            tiles[5, 4].PlaceWall();
 
             rnd = new Random();
         }

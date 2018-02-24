@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoBomber.MacOS.SpriteTypes;
 
 namespace MonoBomber.MacOS {
     /// <summary>
     /// A player that is capable of placing bombs
     /// </summary>
-    public class Player : Sprite {
+    public class Player : FreeMovingSprite {
+
         // how long it takes for bombs to recharge
         public const int BOMB_COOLDOWN_TIME = 50 + Explosion.LINGER_TIME;
 
-        // stats
+        // base stats
         private const int SPEED = 8;
         public const int BASE_HEALTH = 100;
 
+        // stats
+        public int health;
+        public int deaths;
+
         // how long this player has left until it can bomb again
         private int bombCooldownLeft;
-
-        public int health;
-
-        public int deaths;
 
         // keys the player uses
         private readonly Keys upKey;
@@ -49,17 +51,16 @@ namespace MonoBomber.MacOS {
         public new void Draw() {
             base.Draw();
 
-            game.spriteBatch.DrawString(MonoBomberGame.font, "Health: " + health, pos, Color.White);
-            game.spriteBatch.DrawString(MonoBomberGame.font, "Deaths: " + deaths, new Vector2(pos.X,20 + pos.Y), Color.White);
-
+            Game.spriteBatch.DrawString(MonoBomberGame.font, "Health: " + health, pos, Color.White);
+            Game.spriteBatch.DrawString(MonoBomberGame.font, "Deaths: " + deaths, new Vector2(pos.X, 20 + pos.Y), Color.White);
         }
 
         public override void Update() {
-            if (getTile().hasExplosion() && health > 0) {
+            if (EstimateTile().HasExplosion() && health > 0) {
                 health--;
             }
 
-            if(health <= 0) {
+            if (health <= 0) {
                 health = BASE_HEALTH;
                 deaths++;
             }
@@ -74,26 +75,26 @@ namespace MonoBomber.MacOS {
 
             // check up/down
             if (state.IsKeyDown(upKey)) {
-                Tile up = getTileUp();
-                if (pos.Y > 0 && (up == null || (up != null && !up.hasWall()))) {
+                Tile up = EstimateTileUp();
+                if (pos.Y > 0 && (up == null || (up != null && !up.HasWall()))) {
                     pos.Y -= SPEED;
                 }
             } else if (state.IsKeyDown(downKey)) {
-                Tile down = getTileDown();
-                if (pos.Y + texture.Height < game.graphics.GraphicsDevice.Viewport.Height && (down == null || (down != null && !down.hasWall()))) {
+                Tile down = EstimateTileDown();
+                if (pos.Y + Texture.Height < Game.graphics.GraphicsDevice.Viewport.Height && (down == null || (down != null && !down.HasWall()))) {
                     pos.Y += SPEED;
                 }
             }
 
             // check left/right
             if (state.IsKeyDown(leftKey)) {
-                Tile left = getTileLeft();
-                if (pos.X > 0 && (left == null || (left != null && !left.hasWall()))) {
+                Tile left = EstimateTileLeft();
+                if (pos.X > 0 && (left == null || (left != null && !left.HasWall()))) {
                     pos.X -= SPEED;
                 }
             } else if (state.IsKeyDown(rightKey)) {
-                Tile right = getTileRight();
-                if (pos.X + texture.Width < game.graphics.GraphicsDevice.Viewport.Width && (right == null || (right != null && !right.hasWall()))) {
+                Tile right = EstimateTileRight();
+                if (pos.X + Texture.Width < Game.graphics.GraphicsDevice.Viewport.Width && (right == null || (right != null && !right.HasWall()))) {
                     pos.X += SPEED;
                 }
             }
@@ -112,9 +113,9 @@ namespace MonoBomber.MacOS {
         // places a bomb to the right of this player
         public void PlaceBomb() {
             if (bombCooldownLeft == 0) {
-                Tile tile = getTile();
-                if (!tile.isOccupied()) {
-                    tile.PlaceSprite(new Bomb(this, tile.pos, color, game));
+                Tile tile = EstimateTile();
+                if (!tile.IsOccupied()) {
+                    tile.PlaceBomb(this);
                     bombCooldownLeft = BOMB_COOLDOWN_TIME;
                 }
             }
