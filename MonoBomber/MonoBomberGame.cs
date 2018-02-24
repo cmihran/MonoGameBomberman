@@ -59,7 +59,7 @@ namespace MonoBomber.MacOS {
             tiles = new Tile[NUM_TILES, NUM_TILES];
             for (int x = 0; x < NUM_TILES; x++) {
                 for (int y = 0; y < NUM_TILES; y++) {
-                    tiles[x, y] = new Tile(this, new Vector2(x * TILE_LEN, y * TILE_LEN));
+                    tiles[x, y] = new Tile(x, y, this, new Vector2(x * TILE_LEN, y * TILE_LEN));
                 }
             }
 

@@ -59,7 +59,7 @@ namespace MonoBomber.MacOS {
 
         public Tile getTileLeft() {
             int myX = getTileXIndex();
-            int myY = getTileXIndex();
+            int myY = getTileYIndex();
             if(myX - 1 < 0) {
                 return null;
             } else {
@@ -69,7 +69,7 @@ namespace MonoBomber.MacOS {
 
         public Tile getTileRight() {
             int myX = getTileXIndex();
-            int myY = getTileXIndex();
+            int myY = getTileYIndex();
             if(myX + 1 >= MonoBomberGame.NUM_TILES) {
                 return null;
             } else {
@@ -79,7 +79,7 @@ namespace MonoBomber.MacOS {
 
         public Tile getTileUp() {
             int myX = getTileXIndex();
-            int myY = getTileXIndex();
+            int myY = getTileYIndex();
             if(myY - 1 < 0) {
                 return null;
             } else {
@@ -89,7 +89,7 @@ namespace MonoBomber.MacOS {
 
         public Tile getTileDown() {
             int myX = getTileXIndex();
-            int myY = getTileXIndex();
+            int myY = getTileYIndex();
             if(myY + 1 >= MonoBomberGame.NUM_TILES) {
                 return null;
             } else {

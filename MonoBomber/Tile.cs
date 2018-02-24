@@ -6,9 +6,11 @@ namespace MonoBomber.MacOS {
     public class Tile : Sprite {
         private Sprite occupant;
 
+        private int x, y;
 
-        public Tile(MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game) {
-
+        public Tile(int x, int y, MonoBomberGame game, Vector2 pos) : base(MonoBomberGame.tileTex, pos, Color.LightGray, game) {
+            this.x = x;
+            this.y = y;
         }
 
         public override void Update() {
