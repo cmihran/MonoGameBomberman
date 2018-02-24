@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoBomber.MacOS.SpriteTypes;
 
@@ -76,26 +74,34 @@ namespace MonoBomber.MacOS {
             // check up/down
             if (state.IsKeyDown(upKey)) {
                 Tile up = EstimateTileUp();
-                if (pos.Y > 0 && (up == null || (up != null && !up.HasWall()))) {
-                    pos.Y -= SPEED;
+                if (pos.Y > 0) {
+                    if(up == null || !up.HasWall() || (up.HasWall() && pos.Y > up.pos.Y + up.Texture.Height)){
+                        pos.Y -= SPEED;
+                    }
                 }
             } else if (state.IsKeyDown(downKey)) {
                 Tile down = EstimateTileDown();
-                if (pos.Y + Texture.Height < Game.graphics.GraphicsDevice.Viewport.Height && (down == null || (down != null && !down.HasWall()))) {
-                    pos.Y += SPEED;
+                if (pos.Y + Texture.Height < Game.graphics.GraphicsDevice.Viewport.Height) {
+                    if(down == null || !down.HasWall() || (down.HasWall() && pos.Y + Texture.Height < down.pos.Y)) {
+                        pos.Y += SPEED;
+                    }
                 }
             }
 
             // check left/right
             if (state.IsKeyDown(leftKey)) {
                 Tile left = EstimateTileLeft();
-                if (pos.X > 0 && (left == null || (left != null && !left.HasWall()))) {
-                    pos.X -= SPEED;
+                if (pos.X > 0) {
+                    if (left == null || !left.HasWall() || (left.HasWall() && pos.X > left.pos.X + left.Texture.Height)) {
+                        pos.X -= SPEED;
+                    }
                 }
             } else if (state.IsKeyDown(rightKey)) {
                 Tile right = EstimateTileRight();
-                if (pos.X + Texture.Width < Game.graphics.GraphicsDevice.Viewport.Width && (right == null || (right != null && !right.HasWall()))) {
-                    pos.X += SPEED;
+                if (pos.X + Texture.Width < Game.graphics.GraphicsDevice.Viewport.Width) {
+                    if (right == null || !right.HasWall() || (right.HasWall() && pos.X + Texture.Width < right.pos.X)) {
+                        pos.X += SPEED;
+                    }
                 }
             }
 

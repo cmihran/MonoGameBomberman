@@ -11,13 +11,10 @@ namespace MonoBomber.MacOS.SpriteTypes {
         Tile tile;
 
         protected TiledSprite(Texture2D texture, Tile tile, Color color, MonoBomberGame game) {
-            if (tile == null) {
-                throw new ArgumentNullException();
-            }
             this.texture = texture;
             this.color = color;
             this.game = game;
-            this.tile = tile;
+            this.tile = tile ?? throw new ArgumentNullException();
         }
 
         // Sprite Properties

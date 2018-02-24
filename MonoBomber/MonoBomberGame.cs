@@ -9,11 +9,8 @@ namespace MonoBomber.MacOS {
     /// This is the main type for your game.
     /// </summary>
     public class MonoBomberGame : Game {
-        // link to your graphics device (lets you set various settings on how things
-        // should be drawn, etc)
-        public GraphicsDeviceManager graphics;
 
-        // tool to use when you want to draw sprites to the screen
+        public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
         Player p1;
@@ -51,7 +48,7 @@ namespace MonoBomber.MacOS {
 
             ////////////////////////////
 
-            p1 = new Player(Vector2.Zero, Color.LightBlue,
+            p1 = new Player(new Vector2(TILE_LEN, TILE_LEN), Color.LightBlue,
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
             p2 = new Player(new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
                             Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
@@ -60,10 +57,39 @@ namespace MonoBomber.MacOS {
             for (int x = 0; x < NUM_TILES; x++) {
                 for (int y = 0; y < NUM_TILES; y++) {
                     tiles[x, y] = new Tile(x, y, new Vector2(x * TILE_LEN, y * TILE_LEN), this);
+                    if (x == 0 || y == 0 || x == NUM_TILES - 1 || y == NUM_TILES - 1) {
+                        tiles[x, y].PlaceWall();
+                   }
                 }
             }
 
+            tiles[2, 2].PlaceWall();
+            tiles[2, 3].PlaceWall();
+            tiles[2, 4].PlaceWall();
+            tiles[2, 5].PlaceWall();
+            tiles[2, 6].PlaceWall();
+            tiles[2, 7].PlaceWall();
+
+            tiles[4, 2].PlaceWall();
+            tiles[4, 3].PlaceWall();
+            tiles[4, 4].PlaceWall();
+            tiles[4, 5].PlaceWall();
+            tiles[4, 6].PlaceWall();
+            tiles[4, 7].PlaceWall();
+
+            tiles[5, 2].PlaceWall();
+            tiles[5, 3].PlaceWall();
             tiles[5, 4].PlaceWall();
+            tiles[5, 5].PlaceWall();
+            tiles[5, 6].PlaceWall();
+            tiles[5, 7].PlaceWall();
+
+            tiles[7, 2].PlaceWall();
+            tiles[7, 3].PlaceWall();
+            tiles[7, 4].PlaceWall();
+            tiles[7, 5].PlaceWall();
+            tiles[7, 6].PlaceWall();
+            tiles[7, 7].PlaceWall();
 
             rnd = new Random();
         }
