@@ -33,6 +33,8 @@ namespace MonoBomber.MacOS {
         private const int TILE_LEN = 75;
         public Tile[,] tiles;
 
+        private Random rnd;
+
         public MonoBomberGame() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -61,8 +63,12 @@ namespace MonoBomber.MacOS {
                 }
             }
 
-            Wall wall = new Wall(tiles[5, 5].pos, this);
-            tiles[5, 5].PlaceSprite(wall);
+            tiles[5, 5].PlaceSprite(new Wall(tiles[5, 5].pos, this));
+            tiles[5, 6].PlaceSprite(new Wall(tiles[5, 6].pos, this));
+            tiles[5, 4].PlaceSprite(new Wall(tiles[5, 4].pos, this));
+
+
+            rnd = new Random();
         }
 
         /// <summary>
@@ -113,6 +119,16 @@ namespace MonoBomber.MacOS {
             // players
             p1.Update();
             p2.Update();
+
+            //if(rnd.Next(50) == 0) {
+            //    int x = rnd.Next(NUM_TILES);
+            //    int y = rnd.Next(NUM_TILES);
+            //    //while(tiles[x, y].isOccupied()) {
+            //    //    x = rnd.Next(NUM_TILES);
+            //    //    y = rnd.Next(NUM_TILES);
+            //    //} 
+            //    tiles[x, y].PlaceSprite(new Wall(tiles[x, y].pos, this));
+            //}
 
             ////////////////////////////
 

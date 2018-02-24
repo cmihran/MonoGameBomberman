@@ -57,5 +57,45 @@ namespace MonoBomber.MacOS {
             );
         }
 
+        public Tile getTileLeft() {
+            int myX = getTileXIndex();
+            int myY = getTileXIndex();
+            if(myX - 1 < 0) {
+                return null;
+            } else {
+                return game.tiles[myX - 1, myY];
+            }
+        } 
+
+        public Tile getTileRight() {
+            int myX = getTileXIndex();
+            int myY = getTileXIndex();
+            if(myX + 1 >= MonoBomberGame.NUM_TILES) {
+                return null;
+            } else {
+                return game.tiles[myX + 1, myY];
+            }
+        } 
+
+        public Tile getTileUp() {
+            int myX = getTileXIndex();
+            int myY = getTileXIndex();
+            if(myY - 1 < 0) {
+                return null;
+            } else {
+                return game.tiles[myX, myY - 1];
+            }
+        } 
+
+        public Tile getTileDown() {
+            int myX = getTileXIndex();
+            int myY = getTileXIndex();
+            if(myY + 1 >= MonoBomberGame.NUM_TILES) {
+                return null;
+            } else {
+                return game.tiles[myX, myY + 1];
+            }
+        } 
+
     }
 }

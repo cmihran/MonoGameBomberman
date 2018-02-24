@@ -31,28 +31,22 @@ namespace MonoBomber.MacOS {
             }
         }
 
-        public bool isOccupied() {
-            return occupant != null;
-        }
+        public bool isOccupied() => occupant != null;
 
-        public void PlaceSprite(Sprite sprite) {
-            occupant = sprite;
-        }
+        public void PlaceSprite(Sprite sprite) => occupant = sprite;
 
-        public override string ToString() {
-            return "[Tile: " + pos + "]";
-        }
+        public override string ToString() => "[Tile: " + pos + "]";
 
-        public bool hasExplosion() {
-            return occupant is Explosion;
-        }
+        public bool hasExplosion() => occupant is Explosion;
+        public bool hasWall() => occupant is Wall;
 
         public bool nextToExplosion() {
             int myX = getTileXIndex();
             int myY = getTileYIndex();
 
             // check left
-            if (myX - 1 >= 0 && game.tiles[myX - 1, myY].hasExplosion()) {
+            Tile left = getTileLeft();
+            if (left != null && left.hasExplosion()) {
                 return true;
             }
             // check right

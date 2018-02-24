@@ -24,11 +24,11 @@ namespace MonoBomber.MacOS {
         public int deaths;
 
         // keys the player uses
-        private readonly Keys up;
-        private readonly Keys left;
-        private readonly Keys down;
-        private readonly Keys right;
-        private readonly Keys bomb;
+        private readonly Keys upKey;
+        private readonly Keys leftKey;
+        private readonly Keys downKey;
+        private readonly Keys rightKey;
+        private readonly Keys bombKey;
 
         public Player(Vector2 pos, Color color,
                       Keys up, Keys left, Keys down, Keys right, Keys bomb, MonoBomberGame game) : base(MonoBomberGame.playerTex, pos, color, game) {
@@ -39,11 +39,11 @@ namespace MonoBomber.MacOS {
             this.deaths = 0;
 
             // keys
-            this.up = up;
-            this.left = left;
-            this.down = down;
-            this.right = right;
-            this.bomb = bomb;
+            this.upKey = up;
+            this.leftKey = left;
+            this.downKey = down;
+            this.rightKey = right;
+            this.bombKey = bomb;
         }
 
         public new void Draw() {
@@ -73,30 +73,33 @@ namespace MonoBomber.MacOS {
             KeyboardState state = Keyboard.GetState();
 
             // check up/down
-            if (state.IsKeyDown(up)) {
-                if (pos.Y > 0) {
+            if (state.IsKeyDown(upKey)) {
+                Tile up = getTileUp();
+                if (pos.Y > 0 && (up == null || (up != null && !up.hasWall()))) {
                     pos.Y -= SPEED;
                 }
-            } else if (state.IsKeyDown(down)) {
-
-                if (pos.Y + texture.Height < game.graphics.GraphicsDevice.Viewport.Height) {
+            } else if (state.IsKeyDown(downKey)) {
+                Tile down = getTileDown();
+                if (pos.Y + texture.Height < game.graphics.GraphicsDevice.Viewport.Height && (down == null || (down != null && !down.hasWall()))) {
                     pos.Y += SPEED;
                 }
             }
 
             // check left/right
-            if (state.IsKeyDown(left)) {
-                if (pos.X > 0) {
+            if (state.IsKeyDown(leftKey)) {
+                Tile left = getTileLeft();
+                if (pos.X > 0 && (left == null || (left != null && !left.hasWall()))) {
                     pos.X -= SPEED;
                 }
-            } else if (state.IsKeyDown(right)) {
-                if (pos.X + texture.Width < game.graphics.GraphicsDevice.Viewport.Width) {
+            } else if (state.IsKeyDown(rightKey)) {
+                Tile right = getTileRight();
+                if (pos.X + texture.Width < game.graphics.GraphicsDevice.Viewport.Width && (right == null || (right != null && !right.hasWall()))) {
                     pos.X += SPEED;
                 }
             }
 
             // check bomb
-            if (state.IsKeyDown(bomb)) {
+            if (state.IsKeyDown(bombKey)) {
                 if (HasBomb()) {
                     PlaceBomb();
                 }
