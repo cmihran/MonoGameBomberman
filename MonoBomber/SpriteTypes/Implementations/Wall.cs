@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using MonoBomber.MacOS.SpriteTypes;
 
 namespace MonoBomber.MacOS {
-    public class Wall : TiledSprite {
+    public class Wall : TiledSprite, TempSprite {
         
         private int health;
         private const int BASE_HEALTH = 20;
@@ -13,9 +13,10 @@ namespace MonoBomber.MacOS {
         }
 
         public override void Update() {
-            //if(getTileXIndex() == 5 && getTileYIndex() == 5) {
-                //Console.WriteLine(getTile().nextToExplosion());
-
+            //if(Tile.X == 5 && Tile.Y == 5) {
+            //    //Console.WriteLine(Tile.NextToExplosion());
+            //    //Console.WriteLine(health);
+            //    Console.WriteLine(ShouldReap());
             //}
             if(Tile.NextToExplosion()) {
                 if(health > 0) {

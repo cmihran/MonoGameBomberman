@@ -26,9 +26,7 @@ namespace MonoBomber.MacOS.SpriteTypes {
         // Game Loop
         public abstract void Update();
         public void Draw() {
-            if(tile != null) {
-                game.spriteBatch.Draw(texture, tile.pos, color);
-            }
+            game.spriteBatch.Draw(texture, tile.pos, color);
         }
 
         public Rectangle Bounding() {
