@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoBomber.MacOS.SpriteTypes.Implementations;
 
 namespace MonoBomber.MacOS {
     /// <summary>
@@ -13,8 +14,8 @@ namespace MonoBomber.MacOS {
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
-        Player p1;
-        Player p2;
+        Human p1;
+        Bot p2;
 
         public static Texture2D bombTex;
         public static Texture2D explodeTex;
@@ -48,10 +49,12 @@ namespace MonoBomber.MacOS {
 
             ////////////////////////////
 
-            p1 = new Player(new Vector2(TILE_LEN, TILE_LEN), Color.LightBlue,
+            p1 = new Human(new Vector2(TILE_LEN, TILE_LEN), Color.LightBlue,
                             Keys.W, Keys.A, Keys.S, Keys.D, Keys.X, this);
-            p2 = new Player(new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
-                            Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
+            //p2 = new Human(new Vector2(TILE_LEN, TILE_LEN), Color.Pink,
+                            //Keys.Up, Keys.Left, Keys.Down, Keys.Right, Keys.L, this);
+
+            p2 = new Bot(new Vector2(TILE_LEN, TILE_LEN), Color.Pink, p1, this);
 
             tiles = new Tile[NUM_TILES, NUM_TILES];
             for (int x = 0; x < NUM_TILES; x++) {

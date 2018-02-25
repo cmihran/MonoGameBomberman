@@ -64,11 +64,13 @@
     <Compile Include="Utility.cs" />
     <Compile Include="SpriteTypes\Implementations\Bomb.cs" />
     <Compile Include="SpriteTypes\Implementations\Explosion.cs" />
-    <Compile Include="SpriteTypes\Implementations\Player.cs" />
     <Compile Include="SpriteTypes\Implementations\Tile.cs" />
     <Compile Include="SpriteTypes\Implementations\Wall.cs" />
     <Compile Include="SpriteTypes\TiledSprite.cs" />
     <Compile Include="SpriteTypes\FreeMovingSprite.cs" />
+    <Compile Include="SpriteTypes\Implementations\Player\Human.cs" />
+    <Compile Include="SpriteTypes\Implementations\Player\Bot.cs" />
+    <Compile Include="SpriteTypes\Implementations\Player\Player.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -97,6 +99,7 @@
   <ItemGroup>
     <Folder Include="SpriteTypes\" />
     <Folder Include="SpriteTypes\Implementations\" />
+    <Folder Include="SpriteTypes\Implementations\Player\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
