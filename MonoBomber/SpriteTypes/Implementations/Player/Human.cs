@@ -35,37 +35,17 @@ namespace MonoBomber.MacOS.SpriteTypes.Implementations {
             KeyboardState state = Keyboard.GetState();
 
             // check up/down
-            if (state.IsKeyDown(upKey)) {
-                Tile up = EstimateTileUp();
-                if (pos.Y > 0) {
-                    if (up == null || !up.HasWall() || (up.HasWall() && pos.Y > up.pos.Y + up.Texture.Height)) {
-                        pos.Y -= SPEED;
-                    }
-                }
-            } else if (state.IsKeyDown(downKey)) {
-                Tile down = EstimateTileDown();
-                if (pos.Y + Texture.Height < Game.graphics.GraphicsDevice.Viewport.Height) {
-                    if (down == null || !down.HasWall() || (down.HasWall() && pos.Y + Texture.Height < down.pos.Y)) {
-                        pos.Y += SPEED;
-                    }
-                }
+            if (state.IsKeyDown(upKey) && CanMoveUp()) {
+                pos.Y -= SPEED;
+            } else if (state.IsKeyDown(downKey) && CanMoveDown()) {
+                pos.Y += SPEED;
             }
 
             // check left/right
-            if (state.IsKeyDown(leftKey)) {
-                Tile left = EstimateTileLeft();
-                if (pos.X > 0) {
-                    if (left == null || !left.HasWall() || (left.HasWall() && pos.X > left.pos.X + left.Texture.Height)) {
-                        pos.X -= SPEED;
-                    }
-                }
-            } else if (state.IsKeyDown(rightKey)) {
-                Tile right = EstimateTileRight();
-                if (pos.X + Texture.Width < Game.graphics.GraphicsDevice.Viewport.Width) {
-                    if (right == null || !right.HasWall() || (right.HasWall() && pos.X + Texture.Width < right.pos.X)) {
-                        pos.X += SPEED;
-                    }
-                }
+            if (state.IsKeyDown(leftKey) && CanMoveLeft()) {
+                pos.X -= SPEED;
+            } else if (state.IsKeyDown(rightKey) && CanMoveRight()) {
+                pos.X += SPEED;
             }
 
             // check bomb

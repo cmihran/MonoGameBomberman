@@ -23,7 +23,7 @@ namespace MonoBomber.MacOS {
         // how long this player has left until it can bomb again
         protected int bombCooldownLeft;
 
-        public Player(Vector2 pos, Color color, MonoBomberGame game) : base(MonoBomberGame.playerTex, pos, color, game) {
+        protected Player(Vector2 pos, Color color, MonoBomberGame game) : base(MonoBomberGame.playerTex, pos, color, game) {
             // bombs
             this.bombCooldownLeft = 0;
 
@@ -66,6 +66,46 @@ namespace MonoBomber.MacOS {
                     bombCooldownLeft = BOMB_COOLDOWN_TIME;
                 }
             }
+        }
+
+        public bool CanMoveUp() {
+            Tile up = EstimateTileUp();
+            if (pos.Y > 0) {
+                if (up == null || !up.HasWall() || (up.HasWall() && pos.Y > up.pos.Y + up.Texture.Height)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveDown() {
+            Tile down = EstimateTileDown();
+            if (pos.Y + Texture.Height < Game.graphics.GraphicsDevice.Viewport.Height) {
+                if (down == null || !down.HasWall() || (down.HasWall() && pos.Y + Texture.Height < down.pos.Y)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveLeft() {
+            Tile left = EstimateTileLeft();
+            if (pos.X > 0) {
+                if (left == null || !left.HasWall() || (left.HasWall() && pos.X > left.pos.X + left.Texture.Height)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveRight() {
+            Tile right = EstimateTileRight();
+            if (pos.X + Texture.Width < Game.graphics.GraphicsDevice.Viewport.Width) {
+                if (right == null || !right.HasWall() || (right.HasWall() && pos.X + Texture.Width < right.pos.X)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }
