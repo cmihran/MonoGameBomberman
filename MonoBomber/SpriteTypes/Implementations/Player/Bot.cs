@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace MonoBomber.MacOS.SpriteTypes.Implementations {
     public class Bot : Player {
-
-        Human opponent;
         
+        readonly Human opponent;
+
         public Bot(Vector2 pos, Color color, Human opponent, MonoBomberGame game) : base(pos, color, game) {
             this.opponent = opponent;
         }
