@@ -13,7 +13,6 @@ namespace MonoBomber.MacOS {
         public const int BOMB_COOLDOWN_TIME = 50 + Explosion.LINGER_TIME;
 
         // base stats
-        protected const int SPEED = 8;
         public const int BASE_HEALTH = 100;
 
         // stats
@@ -54,6 +53,8 @@ namespace MonoBomber.MacOS {
             }
         }
 
+        public abstract int GetSpeed();
+
         // true if this player can place a bomb
         public bool HasBomb() => (bombCooldownLeft == 0);
 
@@ -67,6 +68,11 @@ namespace MonoBomber.MacOS {
                 }
             }
         }
+
+        public void MoveUp() => pos.Y -= GetSpeed();
+        public void MoveDown() => pos.Y += GetSpeed();
+        public void MoveLeft() => pos.X -= GetSpeed();
+        public void MoveRight() => pos.X += GetSpeed();
 
         public bool CanMoveUp() {
             Tile up = EstimateTileUp();

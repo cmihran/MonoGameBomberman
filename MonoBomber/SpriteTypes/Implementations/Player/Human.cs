@@ -28,6 +28,10 @@ namespace MonoBomber.MacOS.SpriteTypes.Implementations {
             this.bombKey = bomb;
         }
 
+        public override int GetSpeed() {
+            return 8;
+        }
+
         public new void Update() {
             base.Update();
 
@@ -36,16 +40,16 @@ namespace MonoBomber.MacOS.SpriteTypes.Implementations {
 
             // check up/down
             if (state.IsKeyDown(upKey) && CanMoveUp()) {
-                pos.Y -= SPEED;
+                MoveUp();
             } else if (state.IsKeyDown(downKey) && CanMoveDown()) {
-                pos.Y += SPEED;
+                MoveDown();
             }
 
             // check left/right
             if (state.IsKeyDown(leftKey) && CanMoveLeft()) {
-                pos.X -= SPEED;
+                MoveLeft();
             } else if (state.IsKeyDown(rightKey) && CanMoveRight()) {
-                pos.X += SPEED;
+                MoveRight();
             }
 
             // check bomb
